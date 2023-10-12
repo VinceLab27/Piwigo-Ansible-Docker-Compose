@@ -1,0 +1,38 @@
+version: '3'
+services:
+  piwigo:
+    image: piwigo
+    restart: always
+    environment:
+      - MYSQL_HOST=74.207.234.56
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=1234
+      - MYSQL_DB=piwigo
+    ports:
+      - 8080:80
+    volumes:
+      - /path/to/piwigo/data:/var/www/html
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=your_password
+    volumes:
+      - /path/to/mysql/data:/var/lib/mysql
+
+  web:
+    image: nginx
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - /path/to/nginx/config:/etc/nginx/conf.d
+
+  portainer:
+    image: portainer/portainer
+    restart: always
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
